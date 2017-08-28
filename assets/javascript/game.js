@@ -53,7 +53,7 @@ function getPositionOfGuessedLetter(){
 
 //Change the underscores to the letterguessed if correct
 function replaceUnderScores(){
-	//need to replace underScores[positionOfGuessedLetter[x]]
+	//need to replace underScores[positionOfGuessedLetter[x]] with the letter guessed.
 	for (i=0; i<positionOfGuessedLetter.length;i++){
 		underScores[positionOfGuessedLetter[i]] = letterGuessed;
 	}
@@ -86,6 +86,7 @@ function checkGameWord(){
 }
 
 
+
 document.getElementById("wins").innerHTML = wins;// put number of wins on screen
 document.getElementById("losses").innerHTML = losses;// put number of losses
 document.getElementById("guesses-left").innerHTML = guessesLeft;// put number of guesses on screen 
@@ -99,9 +100,11 @@ console.log(gameWord);
 document.onkeyup = function(event){
 
 	letterGuessed = event.key;
-	getPositionOfGuessedLetter();
+	//TODO - check to see if guess was a letter or number - use typeof - if string make sure its a letter of the alphabet (check the its a vowel assignment)
+	
 	compareGuess();
-	// TODO - function to check if guess was already made. 
+	// TODO - function to check if guess was already made. need to check against the guessedLetters array. 
+	getPositionOfGuessedLetter();
 	replaceUnderScores()
 
 	console.log(underScores);
