@@ -67,6 +67,7 @@ function checkGuessCount(){
 	if (guessesLeft == 0){
 		losses = losses + 1;
 		alert("game over.");
+		// TODO restart game function 
 	}
 	return guessesLeft;
 }
@@ -77,6 +78,7 @@ function checkGameWord(){
 	if (underScores === gameWord){
 		alert("you win!");
 		wins = wins + 1; 
+		//RESTART GAME FUNCTION. 
 		return underScores;
 
 	}
@@ -87,11 +89,21 @@ function checkGameWord(){
 
 
 
-document.getElementById("wins").innerHTML = wins;// put number of wins on screen
-document.getElementById("losses").innerHTML = losses;// put number of losses
-document.getElementById("guesses-left").innerHTML = guessesLeft;// put number of guesses on screen 
-document.getElementById("word").innerHTML = underScores;// put the underscores on screen
-document.getElementById("wrongLetters").innerHTML = wrongLetters;// display the wrong guessed letters 
+var winsHTML = document.getElementById("wins");
+winsHTML.innerhtml = wins; // put number of wins on screen
+
+var lossesHTML = document.getElementById("losses");
+lossesHTML.innerHTML = losses;// put number of losses
+
+var guessesLeftHTML = document.getElementById("guesses-left");// put number of guesses on screen 
+guessesLeftHTML.innerHTML = guessesLeft;
+
+var underScoresHTML = document.getElementById("word");// put the underscores on screen
+underScoresHTML.innerHTML = underScores;
+
+var wrongLettersHTML = document.getElementById("wrongLetters");// display the wrong guessed letters 
+wrongLettersHTML.innerHTML = wrongLetters;
+
 // TODO - display the under score array  on the html
 generateUnderScore(); // generate the inital array of underscores that matches the length of the gameword. 
 console.log(gameWord);
