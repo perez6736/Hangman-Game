@@ -2,7 +2,6 @@
 <html>
 <head>
 	<title>Hang man</title>
-	<script src="assets/javascript/game.js"></script>
 
 </head>
 
@@ -12,47 +11,26 @@
 	</header>
 
 	<section>
-		<div>
-			Press any key to get started. 
-		</div>
+		<div>Press any key to get started.</div>
 
-		<div>
-			Wins: 
-		</div>
-		<div class="number-of-wins">
-			
-		</div>
+		<div>Wins:</div>
+		<div class="number-of-wins" id="wins"></div>
+		
+		<div>Losses:</div>
+		<div class="number-of-losses" id="losses"></div>
+		
+		<div>Current word:</div>
+		<div class="current-word" id="word"></div>
 
-		<div>
-			Current word:
-		</div>
-		<div class="word">
-			
-		</div>
-		<div>
-			Number of guesses remaining:
-		</div>
-		<div class="number-of-guesses">
-			
-		</div>
+		<div>Number of guesses remaining:</div>
+		<div class="number-of-guesses" id="guesses-left"></div>
 
-		<div>
-			Letters already guessed:
-		</div>
-		<div class="letters-guessed">
-			
-		</div>
+		<div>Letters already guessed incorrectly:</div>
+		<div class="letters-guessed-incorrectly" id="wrongLetters"></div>
 
 
 	</section>
-	
-
-
-
-
-
-
-
 
 </body>
+<script src="assets/javascript/game.js"></script>
 </html>
