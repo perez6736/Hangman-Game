@@ -20,16 +20,12 @@ var positionOfGuessedLetter = []; //index saying where the letter is in the game
 //compare guess with game word  - return boolean
 function isGuessCorrect(){
 	if(gameWord.indexOf(letterGuessed) > -1){
-		guessedLetters.push(letterGuessed);
-		//correctLetters.push(letterGuessed);
-		console.log(true);
 		return true;
 	}
 	else{
-		guessedLetters.push(letterGuessed);
-		guessesLeft = guessesLeft -1; //takes guess away for incorrect guess. 
-		console.log(guessesLeft);
-		console.log(false);
+		if(!wasLetterGuessed()){
+			guessesLeft = guessesLeft -1; //takes guess away for incorrect guess. 
+		}
 		return false; 
 	}
 }
@@ -53,6 +49,12 @@ function wasLetterGuessed(){
 		}
 	}
 	return false;
+}
+
+// add letter guessed to list of guessed letters
+function addLettertoguessedList(){
+	guessedLetters.push(letterGuessed); // push the letter guessed into the guessed letter array.
+	return guessedLetters;
 }
 
 // make the under scores 
@@ -126,6 +128,7 @@ function newGame(){
 	gameWord = gameWord.toLowerCase();
 	// set new underscores
 	underScores = []; // make empty array so the generateunderscore function creates a good array. 
+	guessedLetters = []; //new guesses for new game. 
 	generateUnderScore();
 	//set guesses to 7 again 
 	guessesLeft = 7;
@@ -158,34 +161,35 @@ underScoresHTML.innerHTML = underScoresDisplay;
 
 var wrongLettersHTML = document.getElementById("wrongLetters");// display the wrong guessed letters 
 wrongLettersHTML.innerHTML = wrongLetters;
- 
-
 
 
 // this is ran whenever a key is pressed - event.key will be the key pressed. 
 document.onkeyup = function(event){
 
-	letterGuessed = event.key; // assifn the variable to the button pressed 
+	letterGuessed = event.key; // assign the variable to the button pressed 
 
-	//check to see if guess was a valid guess
+	//check to see if guess was a valid guess.
 	if (!wasLetterGuessedValid()){
 		alert("not a vlaid guess");
 	}
 
-	isGuessCorrect();
+	//check if letter was guessed. 
+	if(wasLetterGuessed()){
+		console.log("letter was guessed already");
+	}
 
-	replaceUnderScores()
+	isGuessCorrect(); //check to see if the guess is correct
+	addLettertoguessedList(); // after all that add the letter to the list of guessed letters 
+	
+	replaceUnderScores();
 
 	console.log(underScores);
 	console.log(positionOfGuessedLetter)
 	console.log(letterGuessed);
-
 	//update the html with the new value 
 	refreshDisplay();
-
 	checkGuessCount();
 	checkGameWord();
-
 	//update the html with the new value 
 	refreshDisplay();
 
