@@ -32,6 +32,11 @@ function compareGuess(){
 	}
 }
 
+//Add a was guessed function 
+function letterWasGuessed(){
+	// compare the guess with the guessed array and return true or false. 
+}
+
 // make the under scores 
 function generateUnderScore(){
 	for(i=0; i<gameWord.length;i++){
