@@ -1,3 +1,5 @@
+//GLOBAL VARIABLES -------------------------------------------------------------
+
 var guessesLeft = 7; //how many guesses the user has left
 //array of possible game words
 var wins = 0; //number of wins
@@ -5,36 +7,52 @@ var losses = 0; //number of losses
 var words =['Cardinals','Falcons','Ravens','Bills','Panthers','Bears','Bengals','Browns','Cowboys','Broncos','Lions','Packers','Texans','Colts','Jaguars','Chiefs','Dolphins','Vikings','Patriots','Saints','Giants','Jets','Raiders','Eagles','Steelers','Chargers','49ers','Seahawks','Rams','Buccaneers','Titans','Redskins',];
 //the game word. Takes a random number between 0 and length of array and uses that number to select what index of the array to pick. 
 var gameWord = words[Math.floor(Math.random()*words.length)];
-gameWord = gameWord.toLowerCase(); //make the game word lowercase
 var letterGuessed; //the letter guessed which gets assigned to a letter when the user presses a key. 
 var underScores = []; // array of underscores
 var underScoresDisplay;
 var guessedLetters = []; // keeps tracks of letters already guessed. 
-var correctLetters = []; //letters that were guessed correctly 
+var validLetters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','0','1','2','3','4','5','6','7','8','9']; //valid guesses
 var wrongLetters = []; //letters that were guessed incorrectly 
 var positionOfGuessedLetter = []; //index saying where the letter is in the game word. 
 
+//HELPER FUNCTIONS ---------------------------------------------------------------------
 
-//compare guess with game word 
-function compareGuess(){
+//compare guess with game word  - return boolean
+function isGuessCorrect(){
 	if(gameWord.indexOf(letterGuessed) > -1){
 		guessedLetters.push(letterGuessed);
-		correctLetters.push(letterGuessed);
+		//correctLetters.push(letterGuessed);
 		console.log(true);
 		return true;
 	}
 	else{
 		guessedLetters.push(letterGuessed);
-		guessesLeft = guessesLeft -1; 
+		guessesLeft = guessesLeft -1; //takes guess away for incorrect guess. 
 		console.log(guessesLeft);
 		console.log(false);
 		return false; 
 	}
 }
 
-//Add a was guessed function 
-function letterWasGuessed(){
-	// compare the guess with the guessed array and return true or false. 
+//check to see if guess was valid guess - return boolean 
+function wasLetterGuessedValid(){
+	for (i=0; i<validLetters.length; i++){
+		if(validLetters[i] == letterGuessed){
+			return true;
+		}
+	}
+	guessesLeft++;
+	return false;
+}
+
+// check to see if guess was already guessed or not - return boolean
+function wasLetterGuessed(){ 
+	for (i=0; i<guessedLetters.length; i++){
+		if(guessedLetters[i] == letterGuessed){
+			return true;
+		}
+	}
+	return false;
 }
 
 // make the under scores 
@@ -49,7 +67,7 @@ function generateUnderScore(){
 
 }
 
-//get positions of guessed letter from the game word
+//get positions of guessed letter from the game word - returns array with position of letter in gameword 
 function getPositionOfGuessedLetter(){
 	for(i=0; i<gameWord.length; i++){
 		if(gameWord[i] === letterGuessed){
@@ -61,6 +79,7 @@ function getPositionOfGuessedLetter(){
 
 //Change the underscores to the letter guessed if correct
 function replaceUnderScores(){
+	getPositionOfGuessedLetter(); // get position of guessed letters. 
 	//need to replace underScores[positionOfGuessedLetter[x]] with the letter guessed.
 	for (i=0; i<positionOfGuessedLetter.length;i++){
 		underScores[positionOfGuessedLetter[i]] = letterGuessed;
@@ -75,6 +94,7 @@ function replaceUnderScores(){
 function checkGuessCount(){
 	if (guessesLeft == 0){
 		losses = losses + 1;
+		// TODO - Remove the alert and put this message in a div - 
 		alert("Game over. The word was " + gameWord);
 		//restart game function 
 		newGame();
@@ -86,6 +106,7 @@ function checkGuessCount(){
 function checkGameWord(){
 	underScores = underScores.join(''); //turn the array into a string to compare. 
 	if (underScores === gameWord){
+		// TODO - Remove the alert and put this message in a div - 
 		alert("You win! You guessed " + gameWord + " correctly!");
 		wins = wins + 1; 
 		//RESTART GAME FUNCTION. 
@@ -110,6 +131,17 @@ function newGame(){
 	guessesLeft = 7;
 }
 
+function refreshDisplay(){
+	guessesLeftHTML.innerHTML = guessesLeft;
+	winsHTML.innerHTML = wins;
+	lossesHTML.innerHTML = losses;
+	underScoresHTML.innerHTML = underScoresDisplay; 
+}
+
+
+// GAME STARTS HERE ----------------------------------------------------------------------------------------------
+
+gameWord = gameWord.toLowerCase(); //make the game word lowercase
 generateUnderScore(); // generate the initial array of underscores that matches the length of the gameword.
 
 var winsHTML = document.getElementById("wins");
@@ -133,12 +165,15 @@ wrongLettersHTML.innerHTML = wrongLetters;
 // this is ran whenever a key is pressed - event.key will be the key pressed. 
 document.onkeyup = function(event){
 
-	letterGuessed = event.key;
-	//TODO - check to see if guess was a letter or number - use typeof - if string make sure its a letter of the alphabet (check the its a vowel assignment)
-	
-	compareGuess();
-	// TODO - function to check if guess was already made. need to check against the guessedLetters array. 
-	getPositionOfGuessedLetter();
+	letterGuessed = event.key; // assifn the variable to the button pressed 
+
+	//check to see if guess was a valid guess
+	if (!wasLetterGuessedValid()){
+		alert("not a vlaid guess");
+	}
+
+	isGuessCorrect();
+
 	replaceUnderScores()
 
 	console.log(underScores);
@@ -146,12 +181,14 @@ document.onkeyup = function(event){
 	console.log(letterGuessed);
 
 	//update the html with the new value 
-	guessesLeftHTML.innerHTML = guessesLeft;
-	winsHTML.innerHTML = wins;
-	lossesHTML.innerHTML = losses;
-	underScoresHTML.innerHTML = underScoresDisplay; 
+	refreshDisplay();
 
 	checkGuessCount();
 	checkGameWord();
+
+	//update the html with the new value 
+	refreshDisplay();
+
+
 }
 
