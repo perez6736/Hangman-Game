@@ -11,8 +11,8 @@ var letterGuessed; //the letter guessed which gets assigned to a letter when the
 var underScores = []; // array of underscores
 var underScoresDisplay;
 var guessedLetters = []; // keeps tracks of letters already guessed. 
-var validLetters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','0','1','2','3','4','5','6','7','8','9']; //valid guesses
-var wrongLetters = []; //letters that were guessed incorrectly 
+var guessedLettersDisplay = ' ';
+var validLetters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','0','1','2','3','4','5','6','7','8','9']; //valid guesses 
 var positionOfGuessedLetter = []; //index saying where the letter is in the game word. 
 
 //HELPER FUNCTIONS ---------------------------------------------------------------------
@@ -37,7 +37,6 @@ function wasLetterGuessedValid(){
 			return true;
 		}
 	}
-	guessesLeft++;
 	return false;
 }
 
@@ -53,7 +52,11 @@ function wasLetterGuessed(){
 
 // add letter guessed to list of guessed letters
 function addLettertoguessedList(){
-	guessedLetters.push(letterGuessed); // push the letter guessed into the guessed letter array.
+	//check to see if it wasnt guessed and if its valid to add it to the list. 
+	if(!wasLetterGuessed() && wasLetterGuessedValid()){
+		guessedLetters.push(letterGuessed); // push the letter guessed into the guessed letter array.
+	}
+	guessedLettersDisplay = guessedLetters.join(' ');//make the display variable for the HTML 
 	return guessedLetters;
 }
 
@@ -129,6 +132,7 @@ function newGame(){
 	// set new underscores
 	underScores = []; // make empty array so the generateunderscore function creates a good array. 
 	guessedLetters = []; //new guesses for new game. 
+	guessedLettersDisplay = ' '; // clear guessed list
 	generateUnderScore();
 	//set guesses to 7 again 
 	guessesLeft = 7;
@@ -139,6 +143,7 @@ function refreshDisplay(){
 	winsHTML.innerHTML = wins;
 	lossesHTML.innerHTML = losses;
 	underScoresHTML.innerHTML = underScoresDisplay; 
+	guessedLettersHTML.innerHTML = guessedLettersDisplay;
 }
 
 
@@ -159,8 +164,8 @@ guessesLeftHTML.innerHTML = guessesLeft;
 var underScoresHTML = document.getElementById("word");// put the underscores on screen
 underScoresHTML.innerHTML = underScoresDisplay;
 
-var wrongLettersHTML = document.getElementById("wrongLetters");// display the wrong guessed letters 
-wrongLettersHTML.innerHTML = wrongLetters;
+var guessedLettersHTML = document.getElementById("guessed-letters");
+guessedLettersHTML.innerHTML = guessedLettersDisplay;
 
 
 // this is ran whenever a key is pressed - event.key will be the key pressed. 
@@ -170,7 +175,8 @@ document.onkeyup = function(event){
 
 	//check to see if guess was a valid guess.
 	if (!wasLetterGuessedValid()){
-		alert("not a vlaid guess");
+		guessesLeft++; // need to return the guess for invalid guesses. 
+		console.log("not a vlaid guess");
 	}
 
 	//check if letter was guessed. 
