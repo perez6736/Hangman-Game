@@ -8,6 +8,7 @@ var gameWord = words[Math.floor(Math.random()*words.length)];
 gameWord = gameWord.toLowerCase(); //make the game word lowercase
 var letterGuessed; //the letter guessed which gets assigned to a letter when the user presses a key. 
 var underScores = []; // array of underscores
+var underScoresDisplay;
 var guessedLetters = []; // keeps tracks of letters already guessed. 
 var correctLetters = []; //letters that were guessed correctly 
 var wrongLetters = []; //letters that were guessed incorrectly 
@@ -36,7 +37,9 @@ function generateUnderScore(){
 	for(i=0; i<gameWord.length;i++){
 		underScores.push('_');
 	}
+	underScoresDisplay = underScores.join(' ');
 	console.log(underScores);
+	console.log(gameWord);
 	return underScores;
 
 }
@@ -51,14 +54,15 @@ function getPositionOfGuessedLetter(){
 	return positionOfGuessedLetter;
 }
 
-//Change the underscores to the letterguessed if correct
+//Change the underscores to the letter guessed if correct
 function replaceUnderScores(){
 	//need to replace underScores[positionOfGuessedLetter[x]] with the letter guessed.
 	for (i=0; i<positionOfGuessedLetter.length;i++){
 		underScores[positionOfGuessedLetter[i]] = letterGuessed;
 	}
-	//need to clear the positionofguessed array for new guess.
+	//need to clear the position of guessed array for new guess.
 	positionOfGuessedLetter = [];
+	underScoresDisplay = underScores.join(' ');
 	return underScores;
 }
 
@@ -66,28 +70,42 @@ function replaceUnderScores(){
 function checkGuessCount(){
 	if (guessesLeft == 0){
 		losses = losses + 1;
-		alert("game over.");
-		// TODO restart game function 
+		alert("Game over. The word was " + gameWord);
+		//restart game function 
+		newGame();
 	}
 	return guessesLeft;
 }
 
 //check if user guessed the word
 function checkGameWord(){
-	underScores = underScores.join(''); //trun the array into a string
+	underScores = underScores.join(''); //turn the array into a string to compare. 
 	if (underScores === gameWord){
-		alert("you win!");
+		alert("You win! You guessed " + gameWord + " correctly!");
 		wins = wins + 1; 
 		//RESTART GAME FUNCTION. 
+		newGame();
 		return underScores;
 
 	}
-	// got to turn it back to an array 
+	// got to turn it back to an array so we can continue playing.  
 	underScores = underScores.split('');
 	return underScores;
 }
 
+//function to choose new word and restart guesses
+function newGame(){
+	// pick a new word
+	gameWord = words[Math.floor(Math.random()*words.length)];
+	gameWord = gameWord.toLowerCase();
+	// set new underscores
+	underScores = []; // make empty array so the generateunderscore function creates a good array. 
+	generateUnderScore();
+	//set guesses to 7 again 
+	guessesLeft = 7;
+}
 
+generateUnderScore(); // generate the initial array of underscores that matches the length of the gameword.
 
 var winsHTML = document.getElementById("wins");
 winsHTML.innerhtml = wins; // put number of wins on screen
@@ -99,14 +117,13 @@ var guessesLeftHTML = document.getElementById("guesses-left");// put number of g
 guessesLeftHTML.innerHTML = guessesLeft;
 
 var underScoresHTML = document.getElementById("word");// put the underscores on screen
-underScoresHTML.innerHTML = underScores;
+underScoresHTML.innerHTML = underScoresDisplay;
 
 var wrongLettersHTML = document.getElementById("wrongLetters");// display the wrong guessed letters 
 wrongLettersHTML.innerHTML = wrongLetters;
+ 
 
-// TODO - display the under score array  on the html
-generateUnderScore(); // generate the inital array of underscores that matches the length of the gameword. 
-console.log(gameWord);
+
 
 // this is ran whenever a key is pressed - event.key will be the key pressed. 
 document.onkeyup = function(event){
@@ -123,13 +140,13 @@ document.onkeyup = function(event){
 	console.log(positionOfGuessedLetter)
 	console.log(letterGuessed);
 
+	//update the html with the new value 
+	guessesLeftHTML.innerHTML = guessesLeft;
+	winsHTML.innerHTML = wins;
+	lossesHTML.innerHTML = losses;
+	underScoresHTML.innerHTML = underScoresDisplay; 
+
 	checkGuessCount();
 	checkGameWord();
-
-	//update the html with the new value 
-	document.getElementById("guesses-left").innerHTML = guessesLeft;
-	document.getElementById("wins").innerHTML = wins;
-	document.getElementById("losses").innerHTML = losses;
-	// TODO add the updated under score array here. 
 }
 
