@@ -162,15 +162,7 @@ function refreshDisplay(){
 gameWord = gameWord.toLowerCase(); //make the game word lowercase
 generateUnderScore(); // generate the initial array of underscores that matches the length of the gameword.
 
-winsHTML.innerhtml = wins; // put number of wins on screen
-
-lossesHTML.innerHTML = losses;// put number of losses
-
-guessesLeftHTML.innerHTML = guessesLeft;
-
-underScoresHTML.innerHTML = underScoresDisplay;
-
-guessedLettersHTML.innerHTML = guessedLettersDisplay;
+refreshDisplay(); // displays stuff on HTML
 
 footballTeamLogoHTML.innerHTML = "<img src='assets/images/NFLlogo.png'>"
 
