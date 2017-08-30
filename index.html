@@ -2,33 +2,46 @@
 <html>
 <head>
 	<title>Hang man</title>
-
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 </head>
 
 <body>
-	<header>
+	<header class = "header">
 		<h1>Hang man NFL teams.</h1>
 	</header>
 
-	<section>
-		<div>Press Enter to get started.</div>
+	<section class="container ">
+	<div class="row">
+	
+		<div class="col-6">
+			<div id="football-team-logo"><img src="assets/images/NFLlogo.png"></div>
+			<div id="win-message"></div>
+			<div id="loss-message"></div>
+		</div>
 
-		<div>Wins:</div>
-		<div class="number-of-wins" id="wins"></div>
-		
-		<div>Losses:</div>
-		<div class="number-of-losses" id="losses"></div>
-		
-		<div>Current word:</div>
-		<div class="current-word" id="word"></div>
+		<div class="col-6">
+			<div>Press Enter to get started.</div>
 
-		<div>Number of guesses remaining:</div>
-		<div class="number-of-guesses" id="guesses-left"></div>
+			<div>Wins:</div>
+			<div class="number-of-wins" id="wins"></div>
+			
+			<div>Losses:</div>
+			<div class="number-of-losses" id="losses"></div>
+			
+			<div>Current word:</div>
+			<div class="current-word" id="word"></div>
 
-		<div>Letters already guessed:</div>
-		<div class="letters-guessed" id="guessed-letters"></div>
+			<div>Number of guesses remaining:</div>
+			<div class="number-of-guesses" id="guesses-left"></div>
+
+			<div>Letters already guessed:</div>
+			<div class="letters-guessed" id="guessed-letters"></div>
+		</div>
 
 
+
+
+	</div>
 	</section>
 
 </body>

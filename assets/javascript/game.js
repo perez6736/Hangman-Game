@@ -14,7 +14,14 @@ var guessedLetters = []; // keeps tracks of letters already guessed.
 var guessedLettersDisplay = ' ';
 var validLetters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','0','1','2','3','4','5','6','7','8','9']; //valid guesses 
 var positionOfGuessedLetter = []; //index saying where the letter is in the game word. 
-
+var winsHTML = document.getElementById("wins");
+var lossesHTML = document.getElementById("losses");
+var guessesLeftHTML = document.getElementById("guesses-left");
+var underScoresHTML = document.getElementById("word");
+var guessedLettersHTML = document.getElementById("guessed-letters");
+var footballTeamLogoHTML = document.getElementById("football-team-logo");
+var winMessageHTML = document.getElementById("win-message");
+var lossMessageHTML = document.getElementById("loss-message");
 //HELPER FUNCTIONS ---------------------------------------------------------------------
 
 //compare guess with game word  - return boolean
@@ -100,7 +107,8 @@ function checkGuessCount(){
 	if (guessesLeft == 0){
 		losses = losses + 1;
 		// TODO - Remove the alert and put this message in a div - 
-		alert("Game over. The word was " + gameWord);
+		lossMessageHTML.innerHTML = "Game over. The word was " + gameWord;
+		winMessageHTML.innerHTML = " " // clear the old message. 
 		//restart game function 
 		newGame();
 	}
@@ -112,7 +120,9 @@ function checkGameWord(){
 	underScores = underScores.join(''); //turn the array into a string to compare. 
 	if (underScores === gameWord){
 		// TODO - Remove the alert and put this message in a div - 
-		alert("You win! You guessed " + gameWord + " correctly!");
+		winMessageHTML.innerHTML = "You win! You guessed " + gameWord + " correctly!";
+		lossMessageHTML.innerHTML = " "// clear the old message. 
+		footballTeamLogoHTML.innerHTML = "<img src='assets/images/"+ gameWord +".gif'>"
 		wins = wins + 1; 
 		//RESTART GAME FUNCTION. 
 		newGame();
@@ -152,21 +162,17 @@ function refreshDisplay(){
 gameWord = gameWord.toLowerCase(); //make the game word lowercase
 generateUnderScore(); // generate the initial array of underscores that matches the length of the gameword.
 
-var winsHTML = document.getElementById("wins");
 winsHTML.innerhtml = wins; // put number of wins on screen
 
-var lossesHTML = document.getElementById("losses");
 lossesHTML.innerHTML = losses;// put number of losses
 
-var guessesLeftHTML = document.getElementById("guesses-left");// put number of guesses on screen 
 guessesLeftHTML.innerHTML = guessesLeft;
 
-var underScoresHTML = document.getElementById("word");// put the underscores on screen
 underScoresHTML.innerHTML = underScoresDisplay;
 
-var guessedLettersHTML = document.getElementById("guessed-letters");
 guessedLettersHTML.innerHTML = guessedLettersDisplay;
 
+footballTeamLogoHTML.innerHTML = "<img src='assets/images/NFLlogo.png'>"
 
 // this is ran whenever a key is pressed - event.key will be the key pressed. 
 document.onkeyup = function(event){
