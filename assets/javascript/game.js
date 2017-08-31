@@ -74,8 +74,6 @@ function generateUnderScore(){
 		underScores.push('_');
 	}
 	underScoresDisplay = underScores.join(' ');
-	console.log(underScores);
-	console.log(gameWord);
 	return underScores;
 
 }
@@ -187,10 +185,7 @@ document.onkeyup = function(event){
 	addLettertoguessedList(); // after all that add the letter to the list of guessed letters 
 	
 	replaceUnderScores();
-
-	console.log(underScores);
-	console.log(positionOfGuessedLetter)
-	console.log(letterGuessed);
+	
 	//update the html with the new value 
 	refreshDisplay();
 	checkGuessCount();
