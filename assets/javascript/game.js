@@ -22,6 +22,7 @@ var guessedLettersHTML = document.getElementById("guessed-letters");
 var footballTeamLogoHTML = document.getElementById("football-team-logo");
 var winMessageHTML = document.getElementById("win-message");
 var lossMessageHTML = document.getElementById("loss-message");
+var messageHTML = document.getElementById("error-message");
 //HELPER FUNCTIONS ---------------------------------------------------------------------
 
 //compare guess with game word  - return boolean
@@ -170,16 +171,16 @@ footballTeamLogoHTML.innerHTML = "<img src='assets/images/NFLlogo.png'>"
 document.onkeyup = function(event){
 
 	letterGuessed = event.key; // assign the variable to the button pressed 
-
+	messageHTML.innerHTML = " ";
 	//check to see if guess was a valid guess.
 	if (!wasLetterGuessedValid()){
 		guessesLeft++; // need to return the guess for invalid guesses. 
-		console.log("not a vlaid guess");
+		messageHTML.innerHTML = "'" + letterGuessed + "'" + " is not a valid guess";
 	}
 
 	//check if letter was guessed. 
 	if(wasLetterGuessed()){
-		console.log("letter was guessed already");
+		messageHTML.innerHTML = "'" + letterGuessed + "'" + " letter was guessed already";
 	}
 
 	isGuessCorrect(); //check to see if the guess is correct
